@@ -28,6 +28,21 @@ public class Snake : MonoBehaviour
 
     void Move(Vector3 direction)
     {
+        Vector3 ExpectedPosition = transform.position + direction * speed * Time.deltaTime;
+
+        // Perform collision detection
+        Collider[] colliders = Physics.OverlapSphere(ExpectedPosition, .25f);
+        foreach (Collider collider in colliders)
+        {
+            // Ignore collisions with the snake's own body parts
+            if (bodyParts.Contains(collider.transform))
+            {
+                continue;
+            }
+
+            return;
+        }
+
         transform.position += direction * speed * Time.deltaTime;
 
         if (bodyParts.Count > 1)

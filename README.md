@@ -73,3 +73,86 @@ this class used for managing the pooling system
         }
     }
 ```
+
+### 3. Highlight the nearest food item from the snake head
+in the Food Class, i added this code to Apply Highlight Effect and removing it .
+
+```csharp
+private bool isHighlighted = false;
+private Color originalMaterialColor;
+
+private void Awake()
+{
+    originalMaterialColor = GetComponent<Renderer>().material.color;
+}
+
+public void ApplyHighlightEffect()
+{
+    if (!isHighlighted)
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        renderer.material.color = Color.red;
+        isHighlighted = true;
+    }
+}
+
+public void RemoveHighlightEffect()
+{
+    if (isHighlighted)
+    {
+        Renderer renderer = GetComponent<Renderer>();
+        renderer.material.color = originalMaterialColor;
+        isHighlighted = false;
+    }
+}
+```
+and in the Snake Class, I added the code to find the nearest food object
+```csharp
+public class Snake : MonoBehaviour
+{
+    // ...
+
+    private Food previousHighlightedFood; // Track the previously highlighted food object
+
+    private void Update()
+    {
+        // ...
+
+        HighlightNearestFood();
+    }
+
+    private void HighlightNearestFood()
+    {
+        Food nearestFood = null;
+        float nearestDistance = float.MaxValue;
+
+        foreach (Food food in GameManager.instance.foodPool.foodPool)
+        {
+            if (food.gameObject.activeInHierarchy)
+            {
+                float distance = Vector3.Distance(transform.position, food.transform.position);
+                if (distance < nearestDistance)
+                {
+                    nearestDistance = distance;
+                    nearestFood = food;
+                }
+            }
+        }
+
+        // Remove highlight effect from the previous highlighted food object
+        if (previousHighlightedFood != null)
+        {
+            previousHighlightedFood.RemoveHighlightEffect();
+        }
+
+        // Apply highlight effect to the nearest food item
+        if (nearestFood != null)
+        {
+            nearestFood.ApplyHighlightEffect();
+            previousHighlightedFood = nearestFood; // Update the previously highlighted food object
+        }
+    }
+
+    // ...
+}
+```

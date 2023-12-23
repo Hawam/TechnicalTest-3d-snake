@@ -9,6 +9,14 @@ public class Food : MonoBehaviour
     public int points = 10;
     public int lifetime = 30;
     float time;
+    private bool isHighlighted = false;
+    private Color originalMaterialColor;
+
+    private void Awake()
+    {
+        originalMaterialColor = GetComponent<Renderer>().material.color;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.name);
@@ -35,9 +43,29 @@ public class Food : MonoBehaviour
         float randomx, randomy, randomz;
         randomx = UnityEngine.Random.Range(-10.0f, 10.0f);
         randomy = UnityEngine.Random.Range(-10.0f, 10.0f);
-        randomz = UnityEngine.Random.Range(0.5f, 10.0f);
-        transform.position = new Vector3(randomx, randomz, randomy);
+        //randomz = UnityEngine.Random.Range(0.5f, 10.0f);
+        transform.position = new Vector3(randomx, .5f, randomy);
     }
+    public void ApplyHighlightEffect()
+    {
+        if (!isHighlighted)
+        {
+            Renderer renderer = GetComponent<Renderer>();
+            renderer.material.color = Color.red;
+            isHighlighted = true;
+        }
+    }
+
+    public void RemoveHighlightEffect()
+    {
+        if (isHighlighted)
+        {
+            Renderer renderer = GetComponent<Renderer>();
+            renderer.material.color = originalMaterialColor;
+            isHighlighted = false;
+        }
+    }
+
     void Grow()
     {
         for (int i = 0; i < growthAmount; i++)

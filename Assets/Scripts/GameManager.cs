@@ -62,7 +62,7 @@ internal class GameManager : MonoBehaviour
 
     public class FoodPool
     {
-        private List<Food> foodPool = new List<Food>();
+        public List<Food> foodPool = new List<Food>();
 
         public void Initialize(int poolSize)
         {

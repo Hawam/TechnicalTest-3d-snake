@@ -8,6 +8,7 @@ public class Food : MonoBehaviour
 
     public int points = 10;
     public int lifetime = 30;
+    public int growthAmount = 1;
     float time;
     private bool isHighlighted = false;
     private Color originalMaterialColor;
@@ -24,7 +25,7 @@ public class Food : MonoBehaviour
         {
             GameManager.instance.AddPoints(points);
             GameManager.instance.foodPool.ReturnFood(this);
-            Grow();
+            GameManager.instance.Snake.Grow(growthAmount);
         }
     }
     public void Update()
@@ -36,7 +37,6 @@ public class Food : MonoBehaviour
         }
     }
 
-    public int growthAmount = 1;
     public void randomize()
     {
         time = 0;
@@ -64,16 +64,5 @@ public class Food : MonoBehaviour
             renderer.material.color = originalMaterialColor;
             isHighlighted = false;
         }
-    }
-
-    void Grow()
-    {
-        for (int i = 0; i < growthAmount; i++)
-        {
-            GameObject newPart = Instantiate(FindObjectOfType<Snake>().bodyPrefab.gameObject);
-            newPart.transform.position = FindObjectOfType<Snake>().bodyParts[FindObjectOfType<Snake>().bodyParts.Count - 1].position + new Vector3(0, 0, 0.7f);
-            FindObjectOfType<Snake>().bodyParts.Add(newPart.transform);
-        }
-
     }
 }

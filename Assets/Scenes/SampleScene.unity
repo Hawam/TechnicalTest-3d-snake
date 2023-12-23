@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 394286195}
   - component: {fileID: 394286194}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GameManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44391c9c0ac1df46bdf18c2cf541e84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Snake: {fileID: 2103336944}
   food: {fileID: 3340147172058780062, guid: d0ae11234f5e0c24f9381df5899def4c, type: 3}
   poolSize: 150
   score: 0

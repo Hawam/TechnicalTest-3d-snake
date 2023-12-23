@@ -7,7 +7,7 @@ using TMPro;
 internal class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
+    public Snake Snake;
     public Food food;
     public FoodPool foodPool = new FoodPool();
     public int poolSize;

@@ -8,9 +8,7 @@ public class Snake : MonoBehaviour
     public Vector3 startDirection;
     public float speed = 1f;
     public List<Transform> bodyParts = new List<Transform>();
-
     private Food previousHighlightedFood; // Track the previously highlighted food object
-
 
     void Start()
     {
@@ -30,13 +28,19 @@ public class Snake : MonoBehaviour
 
     void Move(Vector3 direction)
     {
-        transform.position += direction * speed * Time.deltaTime; ;
-        for (int i = 1; i < bodyParts.Count; i++)
+        transform.position += direction * speed * Time.deltaTime;
+
+        if (bodyParts.Count > 1)
         {
-            Vector3 prevPosition = bodyParts[i - 1].position;
-            bodyParts[i].position = prevPosition;
+            for (int i = bodyParts.Count - 1; i >= 1; i--)
+            {
+                Vector3 prevPosition = bodyParts[i - 1].position;
+                Vector3 newPosition = prevPosition + (bodyParts[i].position - prevPosition).normalized * 0.5f;
+                bodyParts[i].position = newPosition;
+            }
         }
     }
+
     private void HighlightNearestFood()
     {
         Food nearestFood = null;
@@ -69,5 +73,13 @@ public class Snake : MonoBehaviour
         }
     }
 
+    public void Grow(int growthAmount)
+    {
+        for (int i = 0; i < growthAmount; i++)
+        {
+            GameObject newPart = Instantiate(bodyPrefab.gameObject);
+            bodyParts.Add(newPart.transform);
+        }
+    }
 
 }

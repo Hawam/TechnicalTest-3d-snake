@@ -156,3 +156,32 @@ public class Snake : MonoBehaviour
     // ...
 }
 ```
+### 4. Fix the snake tail generation.
+moving the Grow() function from the Food Class to the Snake Class and modifing it to be like this:
+```csharp
+public void Grow(int growthAmount)
+{
+    for (int i = 0; i < growthAmount; i++)
+    {
+        GameObject newPart = Instantiate(bodyPrefab.gameObject);
+        bodyParts.Add(newPart.transform);
+    }
+}
+```
+fixing the logic in Move() Function so the body parts doesn't stack on the same position and ensure there is distance of .5f points between them
+```csharp
+void Move(Vector3 direction)
+{
+    transform.position += direction * speed * Time.deltaTime;
+
+    if (bodyParts.Count > 1)
+    {
+        for (int i = bodyParts.Count - 1; i >= 1; i--)
+        {
+            Vector3 prevPosition = bodyParts[i - 1].position;
+            Vector3 newPosition = prevPosition + (bodyParts[i].position - prevPosition).normalized * 0.5f;
+            bodyParts[i].position = newPosition;
+        }
+    }
+}
+```

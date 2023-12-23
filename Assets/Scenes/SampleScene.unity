@@ -347,7 +347,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b44391c9c0ac1df46bdf18c2cf541e84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  food: {fileID: 8546318155153715943, guid: d0ae11234f5e0c24f9381df5899def4c, type: 3}
+  food: {fileID: 3340147172058780062, guid: d0ae11234f5e0c24f9381df5899def4c, type: 3}
+  poolSize: 150
   score: 0
   winText: {fileID: 2068860855}
 --- !u!4 &394286195

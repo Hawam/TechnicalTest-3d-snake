@@ -15,7 +15,7 @@ public class Food : MonoBehaviour
         if (other.gameObject.name == "Snake")
         {
             GameManager.instance.AddPoints(points);
-            Destroy(gameObject);
+            GameManager.instance.foodPool.ReturnFood(this);
             Grow();
         }
     }
@@ -24,13 +24,14 @@ public class Food : MonoBehaviour
         time = time + Time.deltaTime;
         if (time > lifetime)
         {
-            Destroy(gameObject);
+            GameManager.instance.foodPool.ReturnFood(this);
         }
     }
 
     public int growthAmount = 1;
     public void randomize()
     {
+        time = 0;
         float randomx, randomy, randomz;
         randomx = UnityEngine.Random.Range(-10.0f, 10.0f);
         randomy = UnityEngine.Random.Range(-10.0f, 10.0f);
